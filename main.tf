@@ -52,7 +52,6 @@ resource "aws_glue_crawler" "cloudtrail_parquet_crawler" {
     delete_behavior = "DEPRECATE_IN_DATABASE"
     update_behavior = "UPDATE_IN_DATABASE"
   }
-  tags = {}
 }
 
 
@@ -66,14 +65,24 @@ resource "aws_glue_crawler" "cloudtrail_raw_crawler" {
     exclusions = ["**-Digest**", "**Config**"]
   }
 
-  configuration = <<EOF
-{
-  "Version":1.0,
-  "Grouping": {
-    "TableGroupingPolicy": "CombineCompatibleSchemas"
+  configuration = jsonencode(
+    {
+      Version = "1.0",
+      Grouping = {
+        TableGroupingPolicy = "CombineCompatibleSchemas"
+      },
+      CrawlerOutput = {
+        Partitions = {
+          AddOrUpdateBehavior = "InheritFromTable"
+        }
+      }
+      Version = 1
+    }
+  )
+  schema_change_policy {
+    delete_behavior = "DEPRECATE_IN_DATABASE"
+    update_behavior = "UPDATE_IN_DATABASE"
   }
-}
-EOF
 }
 
 resource "aws_glue_trigger" "start_cloudtrail_raw_to_parquet" {
