@@ -50,7 +50,7 @@ resource "aws_glue_crawler" "cloudtrail_parquet_crawler" {
   )
   schema_change_policy {
     delete_behavior = "DEPRECATE_IN_DATABASE"
-    update_behavior = "UPDATE_IN_DATABASE"
+    update_behavior = "LOG"
   }
 }
 
@@ -81,7 +81,7 @@ resource "aws_glue_crawler" "cloudtrail_raw_crawler" {
   )
   schema_change_policy {
     delete_behavior = "DEPRECATE_IN_DATABASE"
-    update_behavior = "UPDATE_IN_DATABASE"
+    update_behavior = "LOG"
   }
 }
 
