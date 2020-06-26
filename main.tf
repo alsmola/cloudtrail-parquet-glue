@@ -44,6 +44,9 @@ resource "aws_glue_crawler" "cloudtrail_parquet_crawler" {
         Partitions = {
           AddOrUpdateBehavior = "InheritFromTable"
         }
+        Tables = {
+          AddOrUpdateBehavior = "MergeNewColumns"
+        }
       }
       Version = 1
     }
@@ -74,6 +77,9 @@ resource "aws_glue_crawler" "cloudtrail_raw_crawler" {
       CrawlerOutput = {
         Partitions = {
           AddOrUpdateBehavior = "InheritFromTable"
+        }
+        Tables = {
+          AddOrUpdateBehavior = "MergeNewColumns"
         }
       }
       Version = 1
