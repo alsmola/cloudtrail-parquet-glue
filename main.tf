@@ -22,7 +22,6 @@ resource "aws_glue_job" "cloudtrail_to_parquet" {
     "--glue_database"        = "${var.glue_database}"
     "--raw_cloudtrail_table" = "raw_${replace(var.cloudtrail_bucket, "-", "_")}"
     "--results_bucket"       = "${var.etl_results_bucket}"
-    "--job-bookmark-option"  = "job-bookmark-enable"
     "--job-language"         = "python"
   }
 }
@@ -109,9 +108,6 @@ resource "aws_glue_trigger" "after_cloudtrail_raw_crawler" {
 
   actions {
     job_name = "CloudTrailToParquet"
-    arguments = {
-      "job-bookmark-enable" = "true"
-    }
   }
 
   predicate {
