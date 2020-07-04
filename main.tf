@@ -77,15 +77,12 @@ resource "aws_glue_crawler" "cloudtrail_raw_crawler" {
         Partitions = {
           AddOrUpdateBehavior = "InheritFromTable"
         }
-        Tables = {
-          AddOrUpdateBehavior = "MergeNewColumns"
-        }
       }
       Version = 1
     }
   )
   schema_change_policy {
-    delete_behavior = "DEPRECATE_IN_DATABASE"
+    delete_behavior = "LOG"
     update_behavior = "LOG"
   }
 }

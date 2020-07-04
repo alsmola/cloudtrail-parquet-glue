@@ -41,5 +41,5 @@ variable "glue_database" {
 variable "temp_directory" {
   type        = string
   description = "Bucket used for temporary files of Glue ETL job"
-  default     = "azs-logs-parquet"
+  default     = "azs-logs-temp"
 }
